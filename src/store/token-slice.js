@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const tokenSlice = createSlice({
   name: 'token',
   initialState: {
-     loaded: false,
-     balance: null
+    loaded: false,
+    balance: null
   },
   reducers: {
     loaded(state) {

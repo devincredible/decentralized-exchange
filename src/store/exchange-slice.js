@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const exchangeSlice = createSlice({
   name: 'exchange',
   initialState: {
-     loaded: false,
+    loaded: false
   },
   reducers: {
     loaded(state) {

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Navbar from './components/Layout/Navbar';
+import Content from './components/Main/Content';
 import { loadAccount, loadNetworkId } from './store/web3-actions';
 import { loadToken } from './store/token-actions';
 import { loadExchange } from './store/exchange-actions';
@@ -41,8 +42,8 @@ const App = () => {
   return (
     <React.Fragment>
       <Navbar />
-      {/*contractsLoaded && <Content />*/}
-      {/*!contractsLoaded && <div className="content" />*/}
+      {contractsLoaded && <Content />}
+      {!contractsLoaded && <div className="content" />}
     </React.Fragment>
   );
 }
