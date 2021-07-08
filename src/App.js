@@ -1,13 +1,18 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import Navbar from './components/Layout/Navbar';
 import { loadAccount, loadNetworkId } from './store/web3-actions';
 import { loadToken } from './store/token-actions';
 import { loadExchange } from './store/exchange-actions';
 import { getToken, getExchange } from './instances/contracts';
 
+import './App.css';
+
+
 const App = () => {
   const dispatch = useDispatch();
+  const contractsLoaded = useSelector(state => state.token.loaded && state.exchange.loaded);
   
   useEffect(() => {    
     dispatch(loadAccount());
@@ -34,9 +39,11 @@ const App = () => {
   }, [dispatch]);
   
   return (
-    <div>
-      PEPE
-    </div>
+    <React.Fragment>
+      <Navbar />
+      {/*contractsLoaded && <Content />*/}
+      {/*!contractsLoaded && <div className="content" />*/}
+    </React.Fragment>
   );
 }
 
