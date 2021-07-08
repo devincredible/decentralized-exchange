@@ -50,7 +50,6 @@ const ordersSlice = createSlice({
       }      
       
       state.orderFilling = false;
-
     }
   }
 });

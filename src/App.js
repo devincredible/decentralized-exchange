@@ -10,7 +10,6 @@ import { getToken, getExchange } from './instances/contracts';
 
 import './App.css';
 
-
 const App = () => {
   const dispatch = useDispatch();
   const contractsLoaded = useSelector(state => state.token.loaded && state.exchange.loaded);

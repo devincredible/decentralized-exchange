@@ -8,8 +8,6 @@ export const loadAccount = () => {
     dispatch(web3Actions.getAccount({
       account
     }));
-  
-    //return account;
   };
 };
 

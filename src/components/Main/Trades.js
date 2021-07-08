@@ -7,16 +7,15 @@ import { decorateFilledOrders } from '../../helpers/decorators';
 const Trades = () => {
   const filledOrdersLoaded = useSelector(state => state.orders.filledOrders.loaded);
   const orders = useSelector(state => state.orders.filledOrders.data);
+  
+  // Clone the array so it can be modified
+  let filledOrders = [...orders];
   // Sort orders by date ascending for price comparison
-  let filledOrders = [...orders]; // Clone the array so it can be modified (it was read only)
   filledOrders = filledOrders.sort((a, b) => a.timestamp - b.timestamp);    
   // Decorate the  orders
   filledOrders = decorateFilledOrders(orders);
-
   // Sort orders by date desdending
   filledOrders = filledOrders.sort((a, b) => b.timestamp - a.timestamp);
-
-
  
   const showFilledOrders = (filledOrders) => {
     return (
