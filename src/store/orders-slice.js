@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { reject } from 'lodash';
 
 let index, data;
 
@@ -17,7 +18,12 @@ const ordersSlice = createSlice({
       loaded: false,
       data: []
     },
-    orderCancelling: false
+    orderCancelling: false,
+    orderFilling: false,
+    openOrders: {
+      loaded: false,
+      data: []
+    }
   },
   reducers: {
     fetchCancelledOrders(state, action) {
@@ -37,6 +43,17 @@ const ordersSlice = createSlice({
         loaded: true,
         data: action.payload
       }
+    },
+    openOrders(state) {
+      const all = state.allOrders.data;
+      const filled = state.filledOrders.data;
+      const cancelled = state.cancelledOrders.data; 
+      
+      state.openOrders.data = reject(all, (order) => {
+        const orderFilled = filled.some((o) => o.id === order.id);
+        const orderCancelled = cancelled.some((o) => o.id === order.id);
+        return (orderFilled || orderCancelled);
+      });
     },
     cancelledOrder(state, action) {
       state.orderCancelling = false;
