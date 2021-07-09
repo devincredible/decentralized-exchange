@@ -67,6 +67,12 @@ const ordersSlice = createSlice({
       }      
       
       state.orderFilling = false;
+    },
+    orderFilling(state) {
+      state.orderFilling = true;
+    },
+    orderCancelling(state) {
+      state.orderCancelling = true;
     }
   }
 });

@@ -22,15 +22,45 @@ export const loadAllOrders = (exchange) => {
   }
 };
 
-// export const subscribeToEvents = (exchange) => {  
-//   return async(dispatch) => {
-//     exchange.events.Cancel({}, (error, event) => {
-//       dispatch(ordersActions.cancelledOrder(event.returnValues));
-//     });
-    
-//     exchange.events.Trade({}, (error, event) => {
-//       dispatch(ordersActions.filledOrder(event.returnValues))
-//     });
-//   }  
-// };
+export const subscribeToEvents = (exchange) => {  
+  return async(dispatch) => {    
+    exchange.events.Cancel({}, (error, event) => {
+      let eventResult = JSON.parse(JSON.stringify(event.returnValues)); // Transform the instance in a plain object for Redux
+      dispatch(ordersActions.cancelledOrder(eventResult));
+    });
+
+    exchange.events.Trade({}, (error, event) => {
+      let eventResult = JSON.parse(JSON.stringify(event.returnValues)); // Transform the instance in a plain object for Redux
+      dispatch(ordersActions.filledOrder(eventResult));
+    });
+  }  
+};
+
+export const fillOrder = (exchange, order, account) => {
+  return async(dispatch) => {
+    exchange.methods.fillOrder(order.id).send({ from: account })
+    .on('transactionHash', (hash) => {
+      dispatch(ordersActions.orderFilling())
+    })
+    .on('error', (error) => {
+      console.log(error);
+      window.alert('There was an error...')
+    })
+  }
+};
+
+export const cancelOrder = (exchange, order, account) => {
+  return async(dispatch) => {
+    exchange.methods.cancelOrder(order.id).send({ from: account })
+    .on('transactionHash', (hash) => {
+      dispatch(ordersActions.orderCancelling())
+    })
+    .on('error', (error) => {
+      console.log(error);
+      window.alert('There was an error...')
+    })
+  }
+};
+
+
 
