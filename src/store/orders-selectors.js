@@ -1,6 +1,8 @@
-import { get, reject, groupBy } from 'lodash';
+import { get, reject, groupBy, minBy, maxBy } from 'lodash';
 import { createSelector } from 'reselect';
-import { decorateFilledOrders, decorateOrderBookOrders, decorateMyFilledOrders, decorateMyOpenOrders } from '../helpers/decorators';
+import moment from 'moment';
+
+import { decorateFilledOrders, decorateOrderBookOrders, decorateMyFilledOrders, decorateMyOpenOrders, decorateOrder } from '../helpers/decorators';
 
 const account = state => get(state, 'web3.account');
 const allOrders = state => get(state, 'orders.allOrders.data', []);
@@ -66,7 +68,7 @@ export const myOpenOrdersSelector = createSelector(
   }
 );
 
-// Create the Order Book
+// Order Book
 export const orderBookSelector = createSelector(
   openOrders,
   data => {
@@ -92,4 +94,57 @@ export const orderBookSelector = createSelector(
     return orders;
   }
 );
+
+// Price Chart
+export const priceChartSelector = createSelector(
+  filledOrders,
+  data => {
+    // Sort orders by date ascending to compare history
+    let orders = [...data];
+    orders = orders.sort((a, b) => a.timestamp - b.timestamp);
+    // Decorate orders - add display attributes
+    orders = orders.map((o) => decorateOrder(o));
+    // Get the maximum Price
+    const maxPrice = Math.max(...orders.map(order => order.tokenPrice))
+    // Get last 2 orders for final price and price change
+    let secondLastOrder, lastOrder;
+    [secondLastOrder, lastOrder] = orders.slice(orders.length - 2, orders.length);
+    // Get last order price
+    const lastPrice = get(lastOrder, 'tokenPrice', 0);
+    // Get second last order price
+    const secondLastPrice = get(secondLastOrder, 'tokenPrice', 0);
+
+    return({
+      maxPrice,
+      lastPrice,
+      lastPriceChange: (lastPrice >= secondLastPrice ? '+' : '-'),      
+      series: [{
+        data: buildGraphData(orders)
+      }]
+    });
+  }
+);
+
+const buildGraphData = (orders) => {
+  // Group the orders by hour for the chart
+  orders = groupBy(orders, (o) => moment.unix(o.timestamp).startOf('hour').format())
+  // Get each hour where data exists
+  const hours = Object.keys(orders);
+  // Build the graph series
+  const graphData = hours.map((hour) => {
+    // Fetch all the orders from current hour
+    const group = orders[hour];
+    // Calculate price values - open, high, low, close
+    const open = group[0]; // first order
+    const high = maxBy(group, 'tokenPrice'); // high price
+    const low = minBy(group, 'tokenPrice'); // high price
+    const close = group[group.length - 1]; // last order
+    return({
+      x: new Date(hour),
+      y: [open.tokenPrice, high.tokenPrice, low.tokenPrice, close.tokenPrice]
+    });
+  })
+  
+  return graphData;
+};
 

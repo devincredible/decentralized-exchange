@@ -6,7 +6,7 @@ import { getExchange } from '../../instances/contracts';
 import Trades from './Trades';
 import OrderBook from './OrderBook';
 import MyTransactions from './MyTransactions';
-// import PriceChart from './PriceChart';
+import PriceChart from './PriceChart';
 // import Balance from './Balance';
 // import NewOrder from './NewOrder';
 
@@ -29,28 +29,12 @@ const Content = () => {
       </div>
       <OrderBook />
       <div className="vertical-split">
-        <div>d</div>
+        <PriceChart />
         <MyTransactions />
       </div>
       <Trades />
     </div>
   ); 
-  
-  
-  // return(
-  //   <div className="content">
-  //     <div className="vertical-split">
-  //       <Balance />
-  //       <NewOrder />
-  //     </div>
-  //     <OrderBook />
-  //     <div className="vertical-split">
-  //       <PriceChart />
-  //       <MyTransactions />
-  //     </div>
-  //     <Trades />
-  //   </div>
-  // );
 };
 
 export default Content;
