@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { loadAllOrders, subscribeToEvents } from '../../store/orders-actions';
+import { loadAllOrders, subscribeEventsOrders } from '../../store/orders-actions';
+import { subscribeEventsExchange } from '../../store/exchange-actions';
 import { getExchange } from '../../instances/contracts';
 import Trades from './Trades';
 import OrderBook from './OrderBook';
@@ -18,8 +19,9 @@ const Content = () => {
   
   useEffect(() => {
     dispatch(loadAllOrders(exchange));
-    dispatch(subscribeToEvents(exchange));
-  }, [dispatch, exchange]);
+    dispatch(subscribeEventsOrders(exchange));
+    dispatch(subscribeEventsExchange(exchange));
+  }, []);
   
   return(
     <div className="content">

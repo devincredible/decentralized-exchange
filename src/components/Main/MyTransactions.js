@@ -12,10 +12,10 @@ const MyTransactions = () => {
   const account = useSelector(state => state.web3.account);
   const showMyFilledOrders = useSelector(state => state.orders.filledOrders.loaded);
   const allOrdersLoaded = useSelector(state => state.orders.allOrders.loaded);
-  const cancelledOrdersLoaded = useSelector(state => state.orders.allOrders.loaded);
-  const filledOrdersLoaded = useSelector(state => state.orders.allOrders.loaded);
+  const cancelledOrdersLoaded = useSelector(state => state.orders.cancelledOrders.loaded);
+  const filledOrdersLoaded = useSelector(state => state.orders.filledOrders.loaded);
   const myOpenOdersLoaded = allOrdersLoaded && cancelledOrdersLoaded && filledOrdersLoaded;
-  const orderCancelling = useSelector(state => state.orderCancelling);
+  const orderCancelling = useSelector(state => state.orders.orderCancelling);
   const showMyOpenOrders = myOpenOdersLoaded && !orderCancelling;
   const myFilledOrders = useSelector(state => myFilledOrdersSelector(state));
   const myOpenOrders = useSelector(state => myOpenOrdersSelector(state));

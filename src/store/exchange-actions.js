@@ -83,3 +83,23 @@ export const loadWithdrawToken = (exchange, web3, account, amount, token) => {
     })
   };
 };
+
+export const subscribeEventsExchange = (exchange) => {  
+  return async(dispatch) => {    
+    exchange.events.Deposit({}, (error, event) => {
+      if(event.returnValues.token === ETHER_ADDRESS) {
+        dispatch(exchangeActions.etherBalanceLoaded());
+      } else {
+        dispatch(exchangeActions.tokenBalanceLoaded());
+      }      
+    });
+
+    exchange.events.Withdraw({}, (error, event) => {
+      if(event.returnValues.token === ETHER_ADDRESS) {
+        dispatch(exchangeActions.etherBalanceLoaded());
+      } else {
+        dispatch(exchangeActions.tokenBalanceLoaded());
+      }      
+    });
+  }  
+};

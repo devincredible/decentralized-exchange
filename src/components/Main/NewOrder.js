@@ -31,6 +31,8 @@ const NewOrder = () => {
     const buyOrderSubmitHandler = (event) => {
       event.preventDefault();
       dispatch(makeBuyOrder(exchange, token, web3, buyOrderAmount, buyOrderPrice, account));
+      setBuyOrderAmount('');
+      setBuyOrderPrice('');
     };
   
     const buyOrderAmountChangeHandler = (event) => {
@@ -44,6 +46,8 @@ const NewOrder = () => {
     const sellOrderSubmitHandler = (event) => {
       event.preventDefault();
       dispatch(makeSellOrder(exchange, token, web3, sellOrderAmount, sellOrderPrice, account));
+      setSellOrderAmount('');
+      setSellOrderPrice('');
     };
   
     const sellOrderAmountChangeHandler = (event) => {

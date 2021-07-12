@@ -13,7 +13,7 @@ import {
    loadDepositEther, 
    loadWithdrawEther, 
    loadDepositToken, 
-   loadWithdrawToken 
+   loadWithdrawToken
 } from '../../store/exchange-actions';
 import { formatBalance } from '../../helpers/utils';
 
@@ -41,27 +41,30 @@ const Balance = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    if(typeof account !== 'undefined') {      
-      dispatch(loadEtherBalance(account));
-      dispatch(loadTokenBalance(account, token));
-      dispatch(loadExchangeEtherBalance(exchange, account));
-      dispatch(loadExchangeTokenBalance(exchange, token, account));
-    } else {
-      window.alert('Please login with MetaMask')
-    }
-  }, [dispatch, account, token, exchange]);
+    const loadBalances = () => {
+      if(typeof account !== 'undefined') {      
+        dispatch(loadEtherBalance(account));
+        dispatch(loadTokenBalance(account, token));
+        dispatch(loadExchangeEtherBalance(exchange, account));
+        dispatch(loadExchangeTokenBalance(exchange, token, account));        
+      } else {
+        window.alert('Please login with MetaMask')
+      }
+    };
+
+    loadBalances();
+  }, []);
   
   const balanceForm = () => {
     const etherDepositSubmitHandler = (event) => {
       event.preventDefault();
       dispatch(loadDepositEther(exchange, web3, account, etherDepositAmount));
-      console.log('form submitting...');
+      console.log(showForm);
     };
   
     const etherWithdrawSubmitHandler = (event) => {
       event.preventDefault();
       dispatch(loadWithdrawEther(exchange, web3, account, etherWithdrawAmount));
-      console.log('form submitting...');
     };
   
     const etherDepositChangeHandler = (event) => {
@@ -75,13 +78,11 @@ const Balance = () => {
     const tokenDepositSubmitHandler = (event) => {
       event.preventDefault();
       dispatch(loadDepositToken(exchange, web3, account, tokenDepositAmount, token));
-      console.log('form submitting...');
     };
   
     const tokenWithdrawSubmitHandler = (event) => {
       event.preventDefault();
       dispatch(loadWithdrawToken(exchange, web3, account, tokenWithdrawAmount, token));
-      console.log('form submitting...');
     };
   
     const tokenDepositChangeHandler = (event) => {

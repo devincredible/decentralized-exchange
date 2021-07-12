@@ -12,8 +12,8 @@ const OrderBook = () => {
   const account = useSelector(state => state.web3.account);
   const orderBook = useSelector(state => orderBookSelector(state));  
   const allOrdersLoaded = useSelector(state => state.orders.allOrders.loaded);
-  const cancelledOrdersLoaded = useSelector(state => state.orders.allOrders.loaded);
-  const filledOrdersLoaded = useSelector(state => state.orders.allOrders.loaded);
+  const cancelledOrdersLoaded = useSelector(state => state.orders.cancelledOrders.loaded);
+  const filledOrdersLoaded = useSelector(state => state.orders.filledOrders.loaded);
   const orderFilling = useSelector(state => state.orders.orderFilling);
   const showOrderBook = allOrdersLoaded && cancelledOrdersLoaded && filledOrdersLoaded && !orderFilling;
 

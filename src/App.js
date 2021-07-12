@@ -36,7 +36,7 @@ const App = () => {
     }
 
     contractAlert();
-  }, [dispatch]);
+  }, []);
   
   return (
     <React.Fragment>

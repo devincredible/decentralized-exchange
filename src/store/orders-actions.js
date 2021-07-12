@@ -23,7 +23,7 @@ export const loadAllOrders = (exchange) => {
   }
 };
 
-export const subscribeToEvents = (exchange) => {  
+export const subscribeEventsOrders = (exchange) => {  
   return async(dispatch) => {    
     exchange.events.Cancel({}, (error, event) => {
       let eventResult = JSON.parse(JSON.stringify(event.returnValues)); // Transform the instance in a plain object for Redux
@@ -59,11 +59,11 @@ export const cancelOrder = (exchange, order, account) => {
   return async(dispatch) => {
     exchange.methods.cancelOrder(order.id).send({ from: account })
     .on('transactionHash', (hash) => {
-      dispatch(ordersActions.orderCancelling())
+      dispatch(ordersActions.orderCancelling());
     })
     .on('error', (error) => {
       console.log(error);
-      window.alert('There was an error...')
+      window.alert('There was an error...');
     })
   }
 };
