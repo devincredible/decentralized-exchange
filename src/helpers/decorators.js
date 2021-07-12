@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { tokens, ether, ETHER_ADDRESS, GREEN, RED, formatBalance } from './utils';
+import { tokens, ether, ETHER_ADDRESS, GREEN, RED } from './utils';
 
 export const decorateFilledOrders = (orders) => {
   let previousOrder = orders[0];

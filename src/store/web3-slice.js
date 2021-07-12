@@ -5,7 +5,10 @@ const web3Slice = createSlice({
   initialState: {
      account: null,
      networkId: null,
-     balance: null
+     balance: {
+       loaded: false,
+       data: null
+     }
   },
   reducers: {
     getAccount(state, action) {
@@ -14,8 +17,11 @@ const web3Slice = createSlice({
     getNetworkId(state, action) {
       state.networkId = action.payload.networkId;
     },
-    getBalance(state, action) {
-      state.balance = action.payload.balance;
+    etherBalanceLoaded(state) {
+      state.balance.loaded = true;
+    },
+    getEtherBalance(state, action) {
+      state.balance.data = action.payload;
     }
   }
 });

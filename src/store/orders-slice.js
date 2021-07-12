@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { reject } from 'lodash';
 
-let index, data;
+let index;
 
 const ordersSlice = createSlice({
   name: 'orders',

@@ -4,14 +4,20 @@ const tokenSlice = createSlice({
   name: 'token',
   initialState: {
     loaded: false,
-    balance: null
+    balance: {
+      loaded: false,
+      data: null
+    }
   },
   reducers: {
     loaded(state) {
       state.loaded = true;
     },
-    getBalance(state, action) {
-      state.balance = action.payload.balance;
+    tokenBalanceLoaded(state) {
+      state.balance.loaded = true;
+    },
+    getTokenBalance(state, action) {
+      state.balance.data = action.payload;
     }
   }
 });

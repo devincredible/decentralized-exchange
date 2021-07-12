@@ -7,7 +7,7 @@ import Trades from './Trades';
 import OrderBook from './OrderBook';
 import MyTransactions from './MyTransactions';
 import PriceChart from './PriceChart';
-// import Balance from './Balance';
+import Balance from './Balance';
 // import NewOrder from './NewOrder';
 
 const Content = () => {
@@ -24,8 +24,8 @@ const Content = () => {
   return(
     <div className="content">
       <div className="vertical-split">
-        <div>a</div>
-        <div>b</div>
+        <Balance />
+        <div>a</div>        
       </div>
       <OrderBook />
       <div className="vertical-split">

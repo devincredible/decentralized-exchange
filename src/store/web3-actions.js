@@ -21,3 +21,13 @@ export const loadNetworkId = () => {
     return networkId;
   };
 };
+
+export const loadEtherBalance = (account) => {  
+  return async(dispatch) => {
+    const etherBalance = await web3.eth.getBalance(account)
+    dispatch(web3Actions.etherBalanceLoaded());
+    dispatch(web3Actions.getEtherBalance(etherBalance));
+  
+    return etherBalance;
+  };
+};
