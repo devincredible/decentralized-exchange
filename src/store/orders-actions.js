@@ -1,4 +1,5 @@
 import { ordersActions } from './orders-slice';
+import { ETHER_ADDRESS } from '../helpers/utils';
 
 export const loadAllOrders = (exchange) => {  
   return async(dispatch) => {
@@ -33,6 +34,11 @@ export const subscribeToEvents = (exchange) => {
       let eventResult = JSON.parse(JSON.stringify(event.returnValues)); // Transform the instance in a plain object for Redux
       dispatch(ordersActions.filledOrder(eventResult));
     });
+
+    exchange.events.Order({}, (error, event) => {
+      let eventResult = JSON.parse(JSON.stringify(event.returnValues)); // Transform the instance in a plain object for Redux
+      dispatch(ordersActions.orderMade(eventResult));
+    });
   }  
 };
 
@@ -58,6 +64,42 @@ export const cancelOrder = (exchange, order, account) => {
     .on('error', (error) => {
       console.log(error);
       window.alert('There was an error...')
+    })
+  }
+};
+
+export const makeBuyOrder = (exchange, token, web3, orderAmount, orderPrice, account) => {
+  return async(dispatch) => {
+    const tokenGet = token.options.address;
+    const amountGet = web3.utils.toWei(orderAmount, 'ether');
+    const tokenGive = ETHER_ADDRESS;
+    const amountGive = web3.utils.toWei((orderAmount * orderPrice).toString(), 'ether');
+  
+    exchange.methods.makeOrder(tokenGet, amountGet, tokenGive, amountGive).send({ from: account })
+    .on('transactionHash', (hash) => {
+      dispatch(ordersActions.buyOrderMaking());
+    })
+    .on('error', (error) => {
+      console.error(error);
+      window.alert(`There was an error!`);
+    })
+  }
+};
+
+export const makeSellOrder = (exchange, token, web3, orderAmount, orderPrice, account) => {
+  return async(dispatch) => {
+    const tokenGive = token.options.address;
+    const amountGive = web3.utils.toWei(orderAmount, 'ether');
+    const tokenGet = ETHER_ADDRESS;
+    const amountGet = web3.utils.toWei((orderAmount * orderPrice).toString(), 'ether');
+  
+    exchange.methods.makeOrder(tokenGet, amountGet, tokenGive, amountGive).send({ from: account })
+    .on('transactionHash', (hash) => {
+      dispatch(ordersActions.sellOrderMaking());
+    })
+    .on('error', (error) => {
+      console.error(error);
+      window.alert(`There was an error!`);
     })
   }
 };

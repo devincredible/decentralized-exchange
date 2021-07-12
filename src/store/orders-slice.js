@@ -23,7 +23,9 @@ const ordersSlice = createSlice({
     openOrders: {
       loaded: false,
       data: []
-    }
+    },
+    orderBuying: false,
+    orderSelling: false
   },
   reducers: {
     fetchCancelledOrders(state, action) {
@@ -73,6 +75,23 @@ const ordersSlice = createSlice({
     },
     orderCancelling(state) {
       state.orderCancelling = true;
+    },
+    buyOrderMaking(state) {
+      state.orderBuying = true;
+    },
+    sellOrderMaking(state) {
+      state.orderSelling = true;
+    },
+    orderMade(state, action) {
+      // Prevent duplicate orders
+      index = state.allOrders.data.findIndex(order => order.id === action.payload.id);
+
+      if(index === -1) {
+        state.allOrders.data = [...state.allOrders.data, action.payload];
+      }
+
+      state.orderBuying = false;
+      state.orderSelling = false;
     }
   }
 });

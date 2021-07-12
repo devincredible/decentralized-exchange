@@ -8,7 +8,7 @@ import OrderBook from './OrderBook';
 import MyTransactions from './MyTransactions';
 import PriceChart from './PriceChart';
 import Balance from './Balance';
-// import NewOrder from './NewOrder';
+import NewOrder from './NewOrder';
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const Content = () => {
     <div className="content">
       <div className="vertical-split">
         <Balance />
-        <div>a</div>        
+        <NewOrder />        
       </div>
       <OrderBook />
       <div className="vertical-split">
