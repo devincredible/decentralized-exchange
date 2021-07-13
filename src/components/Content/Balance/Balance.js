@@ -36,7 +36,7 @@ const Balance = () => {
     loadBalances();
   }, []);  
   
-  const showForm = etherBalanceLoaded && tokenBalanceLoaded && exchangeEtherBalanceLoaded && exchangeTokenBalanceLoaded;
+  const showContent = etherBalanceLoaded && tokenBalanceLoaded && exchangeEtherBalanceLoaded && exchangeTokenBalanceLoaded;
   
   return(
     <div className="card bg-dark text-white">
@@ -44,8 +44,8 @@ const Balance = () => {
       Balance
     </div>
     <div className="card-body">
-      {showForm && <BalanceContent />}
-      {!showForm && <Spinner />}
+      {showContent && <BalanceContent />}
+      {!showContent && <Spinner />}
     </div>
   </div>   
   );
