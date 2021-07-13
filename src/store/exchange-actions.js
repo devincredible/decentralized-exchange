@@ -1,5 +1,9 @@
 import { exchangeActions } from './exchange-slice';
+import { web3Actions } from './web3-slice';
+import { tokenActions } from './token-slice';
 import { ETHER_ADDRESS } from '../helpers/utils';
+import { loadEtherBalance } from './web3-actions'
+import { loadTokenBalance } from './token-actions'
 
 export const loadExchange = () => {  
   return async(dispatch) => {
@@ -84,22 +88,26 @@ export const loadWithdrawToken = (exchange, web3, account, amount, token) => {
   };
 };
 
-export const subscribeEventsExchange = (exchange) => {  
+export const subscribeEventsExchange = (exchange, token, web3, account) => {  
   return async(dispatch) => {    
-    exchange.events.Deposit({}, (error, event) => {
+    exchange.events.Deposit({}, async(error, event) => {
       if(event.returnValues.token === ETHER_ADDRESS) {
-        dispatch(exchangeActions.etherBalanceLoaded());
+        dispatch(loadEtherBalance(account));
+        dispatch(loadExchangeEtherBalance(exchange, account));
       } else {
-        dispatch(exchangeActions.tokenBalanceLoaded());
-      }      
+        dispatch(loadTokenBalance(account, token));
+        dispatch(loadExchangeTokenBalance(exchange, token, account));
+      }  
     });
 
-    exchange.events.Withdraw({}, (error, event) => {
+    exchange.events.Withdraw({}, async(error, event) => {
       if(event.returnValues.token === ETHER_ADDRESS) {
-        dispatch(exchangeActions.etherBalanceLoaded());
+        dispatch(loadEtherBalance(account));
+        dispatch(loadExchangeEtherBalance(exchange, account));
       } else {
-        dispatch(exchangeActions.tokenBalanceLoaded());
-      }      
+        dispatch(loadTokenBalance(account, token));
+        dispatch(loadExchangeTokenBalance(exchange, token, account));
+      }
     });
   }  
 };

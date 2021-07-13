@@ -59,7 +59,6 @@ const Balance = () => {
     const etherDepositSubmitHandler = (event) => {
       event.preventDefault();
       dispatch(loadDepositEther(exchange, web3, account, etherDepositAmount));
-      console.log(showForm);
     };
   
     const etherWithdrawSubmitHandler = (event) => {
