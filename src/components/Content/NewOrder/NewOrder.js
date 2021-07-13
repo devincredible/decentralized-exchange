@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 
-import web3 from '../../instances/connection';
-import { getToken, getExchange } from '../../instances/contracts';
-import Spinner from '../Layout/Spinner';
-import { makeBuyOrder, makeSellOrder } from '../../store/orders-actions';
+import web3 from '../../../instances/connection';
+import { getToken, getExchange } from '../../../instances/contracts';
+import Spinner from '../../Layout/Spinner';
+import { makeBuyOrder, makeSellOrder } from '../../../store/orders-actions';
 
 const NewOrder = () => {
   const networkId = useSelector(state => state.web3.networkId);

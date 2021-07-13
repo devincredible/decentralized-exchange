@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
-import { filledOrdersSelector } from '../../store/orders-selectors';
-import Spinner from '../Layout/Spinner';
+import { filledOrdersSelector } from '../../../store/orders-selectors';
+import Spinner from '../../Layout/Spinner';
 
 const Trades = () => {
   const filledOrdersLoaded = useSelector(state => state.orders.filledOrders.loaded);

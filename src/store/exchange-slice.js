@@ -6,11 +6,11 @@ const exchangeSlice = createSlice({
     loaded: false,
     etherBalance: {
       loaded: false,
-      data: 0
+      data: null
     },
     tokenBalance: {
       loaded: false,
-      data: 0
+      data: null
     }
   },
   reducers: {

@@ -1,6 +1,4 @@
 import { exchangeActions } from './exchange-slice';
-import { web3Actions } from './web3-slice';
-import { tokenActions } from './token-slice';
 import { ETHER_ADDRESS } from '../helpers/utils';
 import { loadEtherBalance } from './web3-actions'
 import { loadTokenBalance } from './token-actions'

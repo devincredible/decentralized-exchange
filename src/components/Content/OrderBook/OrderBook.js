@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { fillOrder } from '../../store/orders-actions';
-import { orderBookSelector } from '../../store/orders-selectors';
-import { getExchange } from '../../instances/contracts';
-import Spinner from '../Layout/Spinner';
+import { fillOrder } from '../../../store/orders-actions';
+import { orderBookSelector } from '../../../store/orders-selectors';
+import { getExchange } from '../../../instances/contracts';
+import Spinner from '../../Layout/Spinner';
 
 const OrderBook = () => {
   const networkId = useSelector(state => state.web3.networkId);

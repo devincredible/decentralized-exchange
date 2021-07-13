@@ -11,7 +11,7 @@ const store = configureStore({
     token: tokenSlice.reducer,
     exchange: exchangeSlice.reducer,
     orders: ordersSlice.reducer
-  }, 
+  }
 });
 
 export default store;

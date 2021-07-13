@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Navbar from './components/Layout/Navbar';
-import Content from './components/Main/Content';
+import Content from './components/Content/Content';
 import { loadAccount, loadNetworkId } from './store/web3-actions';
 import { loadToken } from './store/token-actions';
 import { loadExchange } from './store/exchange-actions';
 import { getToken, getExchange } from './instances/contracts';
-
 import './App.css';
 
-const App = () => {
-  const dispatch = useDispatch();
+const App = () => {  
   const contractsLoaded = useSelector(state => state.token.loaded && state.exchange.loaded);
+  
+  const dispatch = useDispatch();
   
   useEffect(() => {    
     dispatch(loadAccount());
@@ -32,8 +32,7 @@ const App = () => {
       } else {
         window.alert('Exchange smart contract not detected on the current network. Please select another network with Metamask.');
       }
-
-    }
+    };
 
     contractAlert();
   }, []);

@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import Chart from 'react-apexcharts';
 
-import Spinner from '../Layout/Spinner';
-import { chartOptions } from '../../helpers/priceChart.config';
-import { priceChartSelector } from '../../store/orders-selectors';
+import Spinner from '../../Layout/Spinner';
+import { chartOptions } from '../../../helpers/priceChart.config';
+import { priceChartSelector } from '../../../store/orders-selectors';
 
 const PriceChart = () => {
   const priceChartLoaded = useSelector(state => state.orders.filledOrders.loaded);

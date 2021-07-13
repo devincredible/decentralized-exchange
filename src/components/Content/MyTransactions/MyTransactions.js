@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 
-import Spinner from '../Layout/Spinner';
-import { myFilledOrdersSelector, myOpenOrdersSelector } from '../../store/orders-selectors';
-import { cancelOrder } from '../../store/orders-actions';
-import { getExchange } from '../../instances/contracts';
+import Spinner from '../../Layout/Spinner';
+import { myFilledOrdersSelector, myOpenOrdersSelector } from '../../../store/orders-selectors';
+import { cancelOrder } from '../../../store/orders-actions';
+import { getExchange } from '../../../instances/contracts';
 
 const MyTransactions = () => {
   const networkId = useSelector(state => state.web3.networkId);
