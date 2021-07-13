@@ -1,27 +1,10 @@
 import { useSelector } from 'react-redux';
 
-import { filledOrdersSelector } from '../../../store/orders-selectors';
+import TradesContent from './TradesContent';
 import Spinner from '../../Layout/Spinner';
 
 const Trades = () => {
-  const filledOrdersLoaded = useSelector(state => state.orders.filledOrders.loaded);
-  const filledOrders = useSelector(state => filledOrdersSelector(state));
- 
-  const showFilledOrders = (filledOrders) => {
-    return (
-      <tbody>
-        {filledOrders.map((order) => {
-          return(            
-            <tr className={`order-${order.id}`} key={order.id}>
-              <td className="text-muted">{order.formattedTimestamp}</td>
-              <td>{order.tokenAmount}</td>
-              <td className={`text-${order.tokenPriceClass}`}>{order.tokenPrice}</td>
-            </tr>          
-          );
-        })}
-      </tbody>
-    );
-  };
+  const filledOrdersLoaded = useSelector(state => state.orders.filledOrders.loaded); 
   
   return (
     <div className="vertical">
@@ -38,7 +21,7 @@ const Trades = () => {
                 <th>mTC/ETH</th>
               </tr>
             </thead>
-            {filledOrdersLoaded && showFilledOrders(filledOrders)}
+            {filledOrdersLoaded && <TradesContent />}
             {!filledOrdersLoaded && <Spinner type="table" />}       
           </table>
         </div>
