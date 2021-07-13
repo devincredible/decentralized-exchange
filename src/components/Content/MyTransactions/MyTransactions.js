@@ -1,15 +1,11 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Tabs, Tab } from 'react-bootstrap';
 
+import MyFilledOrdersContent from './MyFilledOrdersContent';
+import MyOpenOrdersContent from './MyOpenOrdersContent';
 import Spinner from '../../Layout/Spinner';
-import { myFilledOrdersSelector, myOpenOrdersSelector } from '../../../store/orders-selectors';
-import { cancelOrder } from '../../../store/orders-actions';
-import { getExchange } from '../../../instances/contracts';
 
 const MyTransactions = () => {
-  const networkId = useSelector(state => state.web3.networkId);
-  const exchange = getExchange(networkId);
-  const account = useSelector(state => state.web3.account);
   const showMyFilledOrders = useSelector(state => state.orders.filledOrders.loaded);
   const allOrdersLoaded = useSelector(state => state.orders.allOrders.loaded);
   const cancelledOrdersLoaded = useSelector(state => state.orders.cancelledOrders.loaded);
@@ -17,47 +13,6 @@ const MyTransactions = () => {
   const myOpenOdersLoaded = allOrdersLoaded && cancelledOrdersLoaded && filledOrdersLoaded;
   const orderCancelling = useSelector(state => state.orders.orderCancelling);
   const showMyOpenOrders = myOpenOdersLoaded && !orderCancelling;
-  const myFilledOrders = useSelector(state => myFilledOrdersSelector(state));
-  const myOpenOrders = useSelector(state => myOpenOrdersSelector(state));
-  
-  const dispatch = useDispatch();
-
-  const myFilledOrdersContent = () => {
-    return(
-      <tbody>
-        { myFilledOrders.map((order) => {
-          return(
-            <tr key={order.id}>
-              <td className="text-muted">{order.formattedTimestamp}</td>
-              <td className={`text-${order.orderTypeClass}`}>{order.orderSign}{order.tokenAmount}</td>
-              <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
-            </tr>
-          );
-        }) }
-      </tbody>
-    );
-  };
-  
-  const myOpenOrdersContent = () => {
-    return(
-      <tbody>
-        { myOpenOrders.map((order) => {
-          return(
-            <tr key={order.id}>            
-              <td className={`text-${order.orderTypeClass}`}>{order.tokenAmount}</td>
-              <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
-              <td 
-                className="text-muted cancel-order"
-                onClick={(e) => {
-                  dispatch(cancelOrder(exchange, order, account))
-                }}
-              >X</td>
-            </tr>
-          );
-        }) }
-      </tbody>
-    );
-  };
   
   return(
     <div className="card bg-dark text-white">
@@ -75,7 +30,8 @@ const MyTransactions = () => {
                   <th>mTC/ETH</th>
                 </tr>
               </thead>
-              {showMyFilledOrders ? myFilledOrdersContent() : <Spinner type="table" />}
+              {showMyFilledOrders && <MyFilledOrdersContent />}
+              {!showMyFilledOrders && <Spinner type="table" />}
             </table>
           </Tab>
           <Tab eventKey="orders" title="Orders">
@@ -87,7 +43,8 @@ const MyTransactions = () => {
                   <th>Cancel</th>
                 </tr>
               </thead>
-              {showMyOpenOrders ? myOpenOrdersContent() : <Spinner type="table" />}
+              {showMyOpenOrders && <MyOpenOrdersContent />}
+              {!showMyOpenOrders && <Spinner type="table" />}
             </table>              
           </Tab>
         </Tabs>
