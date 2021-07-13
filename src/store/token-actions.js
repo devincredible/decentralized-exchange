@@ -11,7 +11,5 @@ export const loadTokenBalance = (account, token) => {
     const tokenBalance = await token.methods.balanceOf(account).call();
     dispatch(tokenActions.tokenBalanceLoaded());
     dispatch(tokenActions.getTokenBalance(tokenBalance));
-  
-    return tokenBalance;
   };
 };

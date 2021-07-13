@@ -27,7 +27,5 @@ export const loadEtherBalance = (account) => {
     const etherBalance = await web3.eth.getBalance(account)
     dispatch(web3Actions.etherBalanceLoaded());
     dispatch(web3Actions.getEtherBalance(etherBalance));
-  
-    return etherBalance;
   };
 };

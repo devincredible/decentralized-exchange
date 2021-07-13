@@ -14,8 +14,6 @@ export const loadExchangeEtherBalance = (exchange, account) => {
     const etherBalance = await exchange.methods.balanceOf(ETHER_ADDRESS, account).call();
     dispatch(exchangeActions.etherBalanceLoaded());
     dispatch(exchangeActions.getEtherBalance(etherBalance));
-  
-    return etherBalance;
   };
 };
 
@@ -24,8 +22,6 @@ export const loadExchangeTokenBalance = (exchange, token, account) => {
     const tokenBalance = await exchange.methods.balanceOf(token.options.address, account).call();
     dispatch(exchangeActions.tokenBalanceLoaded());
     dispatch(exchangeActions.getTokenBalance(tokenBalance));
-  
-    return tokenBalance;
   };
 };
 
