@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import web3 from './instances/connection';
 import Navbar from './components/Layout/Navbar';
 import Content from './components/Content/Content';
 import { loadAccount, loadNetworkId } from './store/web3-actions';
@@ -15,6 +16,11 @@ const App = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {    
+    if(!web3) {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+      return;
+    }
+    
     dispatch(loadAccount());
     
     const contractAlert = async() => {
@@ -40,8 +46,8 @@ const App = () => {
   return (
     <React.Fragment>
       <Navbar />
-      {contractsLoaded && <Content />}
-      {!contractsLoaded && <div className="content" />}
+      {web3 && contractsLoaded && <Content />}
+      {!web3 && !contractsLoaded && <div className="content" />}
     </React.Fragment>
   );
 }
