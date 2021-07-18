@@ -12,7 +12,7 @@ const Navbar = () => {
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
-      <ul className="navbar-nav ms-auto">S
+      <ul className="navbar-nav ms-auto">
         <li className="nav-item">
           <a 
             className="nav-link small" 
