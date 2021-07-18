@@ -21,7 +21,7 @@ First, you will need to `clone` or `fork` the repository into your Github accoun
 <img src="https://docs.github.com/assets/images/help/repository/fork_button.jpg" alt="Fork on GitHub" width='450'>
 
 ```
-$ git clone https://github.com/miquelTC/initial-coin-offering.git
+$ git clone https://github.com/miquelTC/decentralized-exchange.git
 ```
 
 ### Installing
