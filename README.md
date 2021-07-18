@@ -139,13 +139,13 @@ This project consists in a decentralized exchange to allow users making p2p trad
 
 ### Project architecture
 
-<img src="./img/architecture.PNG">
+<img src="./img/architecture.PNG" alt="architecture">
 
 The user can access the application via web-browser, and he must have the Metamask wallet installed. This interface, built with React.js, relies on the web3.js library to communicate with the smart contracts through Metamask. This means that the data reflected on the front-end application is fetched from the Ethereum blockchain. Each action performed by the user (put a a buy order, cancel order, execute a trade...) creates a transaction on Ethereum, which will require Metamask confirmation and pay an small fee, and this transaction will permanently modify the state of the Token and Exchange smart contracts.
 
 ### Exchange features
 
-<img src="./img/layout.PNG">
+<img src="./img/layout.PNG" alt="layout">
 
 There are several sections which have different functionalities for the end user:
 
