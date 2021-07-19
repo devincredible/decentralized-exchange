@@ -1,9 +1,24 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { loadAccount } from '../../store/web3-actions';
 import logo from '../../img/logo.png';
 
 const Navbar = () => {
   const account = useSelector(state => state.web3.account);
+
+  const dispatch = useDispatch();
+
+  const connectWalletHandler = async() => {
+    try {
+      // Request account access
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+    } catch(error) {
+      console.error(error);
+    }
+
+    // Load accounts
+    dispatch(loadAccount());
+  };
   
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -14,14 +29,23 @@ const Navbar = () => {
       </button>
       <ul className="navbar-nav ms-auto">
         <li className="nav-item">
-          <a 
-            className="nav-link small" 
-            href={`https://etherscan.io/address/${account}`}
-            target="blank"
-            rel="noopener noreferrer"
-          >
-            {account}
-          </a>
+          {account && 
+            <a 
+              className="nav-link small" 
+              href={`https://etherscan.io/address/${account}`}
+              target="blank"
+              rel="noopener noreferrer"
+            >
+              {account}
+            </a>}
+          {!account && 
+            <button 
+              type="button" 
+              className="btn btn-outline-light" 
+              onClick={connectWalletHandler} 
+            > 
+              Connect your wallet
+            </button>}
         </li>
       </ul>
     </nav> 

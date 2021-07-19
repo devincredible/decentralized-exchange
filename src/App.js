@@ -12,21 +12,36 @@ import './App.css';
 
 const App = () => {  
   const contractsLoaded = useSelector(state => state.token.loaded && state.exchange.loaded);
+  const account = useSelector(state => state.web3.account);
   
   const dispatch = useDispatch();
   
   useEffect(() => {    
+    // Check if the user has Metamask active
     if(!web3) {
       window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
       return;
-    }
+    }    
     
-    dispatch(loadAccount());
-    
-    const contractAlert = async() => {
+    // Function to fetch all the blockchain data
+    const loadBlockchainData = async() => {
+      // Request accounts acccess if needed
+      try {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });  
+      } catch(error) {
+        console.error(error);
+      }
+      
+      // Load Account
+      dispatch(loadAccount());
+
+      // Load Network ID
       const networkId = await dispatch(loadNetworkId());
+      
+      // Load Contracts
       const token = getToken(networkId);
       const exchange = getExchange(networkId);
+
       if(token) {
         dispatch(loadToken());
       } else {
@@ -40,14 +55,26 @@ const App = () => {
       }
     };
 
-    contractAlert();
+    loadBlockchainData();
+
+    // Metamask Event Subscription - Account changed
+    window.ethereum.on('accountsChanged', (accounts) => {
+      dispatch(loadAccount());
+    });
+
+    // Metamask Event Subscription - Network changed
+    window.ethereum.on('chainChanged', (chainId) => {
+      window.location.reload();
+    });
   }, []);
   
+  const showContent = web3 && account && contractsLoaded;
+
   return (
     <React.Fragment>
       <Navbar />
-      {web3 && contractsLoaded && <Content />}
-      {!web3 && !contractsLoaded && <div className="content" />}
+      {showContent && <Content />}
+      {!showContent && <div className="content" />}
     </React.Fragment>
   );
 }

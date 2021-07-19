@@ -3,7 +3,7 @@ import web3 from '../instances/connection';
 
 export const loadAccount = () => {  
   return async(dispatch) => {
-    const accounts = await web3.eth.requestAccounts();
+    const accounts = await web3.eth.getAccounts();
     const account = accounts[0];
     dispatch(web3Actions.getAccount({
       account
