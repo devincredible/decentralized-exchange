@@ -19,6 +19,18 @@ const Navbar = () => {
     // Load accounts
     dispatch(loadAccount());
   };
+
+  let etherscanUrl;
+
+  if(web3Ctx.networkId === 3) {
+    etherscanUrl = 'https://ropsten.etherscan.io'
+  } else if(web3Ctx.networkId === 4) {
+    etherscanUrl = 'https://rinkeby.etherscan.io'
+  } else if(web3Ctx.networkId === 5) {
+    etherscanUrl = 'https://goerli.etherscan.io'
+  } else {
+    etherscanUrl = 'https://etherscan.io'
+  }
   
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -32,7 +44,7 @@ const Navbar = () => {
           {account && 
             <a 
               className="nav-link small" 
-              href={`https://etherscan.io/address/${account}`}
+              href={`${etherscanUrl}/address/${account}`}
               target="blank"
               rel="noopener noreferrer"
             >
