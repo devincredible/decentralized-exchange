@@ -5,6 +5,7 @@ import logo from '../../img/logo.png';
 
 const Navbar = () => {
   const account = useSelector(state => state.web3.account);
+  const networkId = useSelector(state => state.web3.networkId);
 
   const dispatch = useDispatch();
 
@@ -22,11 +23,11 @@ const Navbar = () => {
 
   let etherscanUrl;
 
-  if(web3Ctx.networkId === 3) {
+  if(networkId === 3) {
     etherscanUrl = 'https://ropsten.etherscan.io'
-  } else if(web3Ctx.networkId === 4) {
+  } else if(networkId === 4) {
     etherscanUrl = 'https://rinkeby.etherscan.io'
-  } else if(web3Ctx.networkId === 5) {
+  } else if(networkId === 5) {
     etherscanUrl = 'https://goerli.etherscan.io'
   } else {
     etherscanUrl = 'https://etherscan.io'
