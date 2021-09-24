@@ -163,7 +163,7 @@ Here the user can see all the orders placed. Also, the user can execute the trad
 
 #### Price Chart
 
-The Price Chart reflects the price of the mTC Token by using a candlestick chart.
+The Price Chart reflects the price of the mTC Token via candlestick chart.
 
 #### My Transactions
 

@@ -17,7 +17,7 @@ const Navbar = () => {
       console.error(error);
     }
 
-    // Load accounts
+    // Load Accounts
     dispatch(loadAccount());
   };
 
